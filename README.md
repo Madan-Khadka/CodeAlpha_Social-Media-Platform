@@ -826,19 +826,7 @@ The application provides user authentication, profile management, post creation,
 
 This project demonstrates practical experience in full-stack web application development and covers the major requirements of the CodeAlpha Social Media Platform task.
 
----
 
-## Author
-
-**Mohan Khadka**
-
-**Program:** Artificial Intelligence Tasks & Instructions
-
-**Organization:** CodeAlpha
-
-**Task:** Task 2 - Social Media Platform
-
-**Project:** SocialHub - Mini Social Media Platform
 
 ```
 ```
