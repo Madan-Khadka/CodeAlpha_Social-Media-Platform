@@ -1,0 +1,94 @@
+{% extends "social/base.html" %}
+
+{% block title %}Edit Profile | SocialHub{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <div class="card form-card">
+
+        <h1>
+            Edit Profile
+        </h1>
+
+        <p class="muted">
+            Update your SocialHub profile.
+        </p>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            {% if user.profile.profile_picture %}
+
+                <img
+                    src="{{ user.profile.profile_picture.url }}"
+                    class="edit-profile-image"
+                >
+
+            {% else %}
+
+                <div class="edit-profile-image avatar-placeholder">
+                    {{ user.username|first|upper }}
+                </div>
+
+            {% endif %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Profile Picture
+                </label>
+
+                {{ profile_form.profile_picture }}
+
+            </div>
+
+
+            {% for field in user_form %}
+
+            <div class="form-group">
+
+                {{ field.label_tag }}
+
+                {{ field }}
+
+                {{ field.errors }}
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="form-group">
+
+                {{ profile_form.bio.label_tag }}
+
+                {{ profile_form.bio }}
+
+                {{ profile_form.bio.errors }}
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

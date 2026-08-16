@@ -1,0 +1,74 @@
+{% extends "social/base.html" %}
+
+{% block title %}Register | SocialHub{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            Social<span>Hub</span>
+        </div>
+
+        <h1>Create account</h1>
+
+        <p class="muted">
+            Join the SocialHub community.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+
+            {% for field in form %}
+
+            <div class="form-group">
+
+                {{ field.label_tag }}
+
+                {{ field }}
+
+                {% if field.errors %}
+
+                    <div class="field-error">
+                        {{ field.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

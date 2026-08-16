@@ -1,0 +1,95 @@
+{% extends "social/base.html" %}
+
+{% block title %}
+Create Post - SocialHub
+{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <div class="form-card">
+
+        <h1>
+            Create Post
+        </h1>
+
+        <p class="form-subtitle">
+            Share your thoughts and photos with SocialHub.
+        </p>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- Post text -->
+            <div class="form-group">
+
+                <label>
+                    What's on your mind?
+                </label>
+
+                {{ form.content }}
+
+            </div>
+
+
+            <!-- =================================================
+                 MULTIPLE LOCAL IMAGE UPLOAD
+            ================================================== -->
+            <div class="form-group">
+
+                <label>
+                    Add Photos
+                </label>
+
+                <input
+                    type="file"
+                    name="images"
+                    id="post-images"
+                    accept="image/*"
+                    multiple
+                >
+
+                <small>
+                    You can select multiple photos.
+                </small>
+
+            </div>
+
+
+            <!-- Image preview -->
+            <div
+                id="image-preview"
+                class="image-preview"
+            ></div>
+
+
+            {% if form.errors %}
+
+            <div class="form-errors">
+                {{ form.errors }}
+            </div>
+
+            {% endif %}
+
+
+            <button
+                type="submit"
+                class="btn primary-btn full-btn"
+            >
+                Publish Post
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

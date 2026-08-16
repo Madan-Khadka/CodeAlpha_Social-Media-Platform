@@ -1,0 +1,114 @@
+{% extends "social/base.html" %}
+
+{% block title %}
+Search | SocialHub
+{% endblock %}
+
+{% block content %}
+
+<div class="search-page">
+
+    <div class="card search-card">
+
+        <h1>
+            Search Users
+        </h1>
+
+        {% if query %}
+
+            <p class="muted">
+                Search results for
+                <strong>{{ query }}</strong>
+            </p>
+
+        {% endif %}
+
+
+        <form
+            method="GET"
+            action="{% url 'search' %}"
+            class="large-search"
+        >
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Search by username or name..."
+            >
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Search
+            </button>
+
+        </form>
+
+
+        {% if query %}
+
+            {% for person in users %}
+
+            <a
+                href="{% url 'profile' person.username %}"
+                class="user-list-item"
+            >
+
+                {% if person.profile.profile_picture %}
+
+                    <img
+                        src="{{ person.profile.profile_picture.url }}"
+                        class="small-avatar"
+                    >
+
+                {% else %}
+
+                    <div class="small-avatar avatar-placeholder">
+                        {{ person.username|first|upper }}
+                    </div>
+
+                {% endif %}
+
+
+                <div>
+
+                    <strong>
+                        @{{ person.username }}
+                    </strong>
+
+                    <small>
+
+                        {{ person.first_name }}
+                        {{ person.last_name }}
+
+                    </small>
+
+                </div>
+
+            </a>
+
+            {% empty %}
+
+            <div class="empty-state">
+
+                <h3>
+                    No account found
+                </h3>
+
+                <p>
+                    Try another username.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "social/base.html" %}
+
+{% block title %}
+Followers | SocialHub
+{% endblock %}
+
+{% block content %}
+
+<div class="list-page">
+
+    <div class="card list-card">
+
+        <div class="list-header">
+
+            <div>
+
+                <h1>
+                    Followers
+                </h1>
+
+                <p>
+                    People following
+                    @{{ profile_user.username }}
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'profile' profile_user.username %}"
+                class="secondary-btn"
+            >
+                Back to Profile
+            </a>
+
+        </div>
+
+
+        {% for person in users %}
+
+        <a
+            href="{% url 'profile' person.username %}"
+            class="user-list-item"
+        >
+
+            {% if person.profile.profile_picture %}
+
+                <img
+                    src="{{ person.profile.profile_picture.url }}"
+                    class="small-avatar"
+                >
+
+            {% else %}
+
+                <div class="small-avatar avatar-placeholder">
+                    {{ person.username|first|upper }}
+                </div>
+
+            {% endif %}
+
+
+            <div>
+
+                <strong>
+                    @{{ person.username }}
+                </strong>
+
+                <small>
+                    {{ person.first_name }}
+                    {{ person.last_name }}
+                </small>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <h3>
+                No followers yet.
+            </h3>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,248 @@
+{% extends "social/base.html" %}
+
+{% block title %}
+@{{ profile_user.username }} | SocialHub
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <!-- =====================================================
+         PROFILE HEADER
+    ====================================================== -->
+
+    <div class="card profile-card">
+
+        <div class="profile-top">
+
+            {% if profile_user.profile.profile_picture %}
+
+                <img
+                    src="{{ profile_user.profile.profile_picture.url }}"
+                    class="profile-avatar"
+                >
+
+            {% else %}
+
+                <div class="profile-avatar avatar-placeholder">
+                    {{ profile_user.username|first|upper }}
+                </div>
+
+            {% endif %}
+
+
+            <div class="profile-main">
+
+                <div class="profile-name-row">
+
+                    <div>
+
+                        <h1>
+                            {{ profile_user.first_name }}
+                            {{ profile_user.last_name }}
+                        </h1>
+
+                        <p>
+                            @{{ profile_user.username }}
+                        </p>
+
+                    </div>
+
+
+                    {% if profile_user == user %}
+
+                    <a
+                        href="{% url 'edit_profile' %}"
+                        class="secondary-btn"
+                    >
+                        Edit Profile
+                    </a>
+
+                    {% else %}
+
+                    <button
+                        class="primary-btn follow-btn"
+                        data-username="{{ profile_user.username }}"
+                    >
+
+                        {% if is_following %}
+                            Following
+                        {% else %}
+                            Follow
+                        {% endif %}
+
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+
+                <p class="profile-bio">
+
+                    {{ profile_user.profile.bio|default:"No bio yet." }}
+
+                </p>
+
+
+                <!-- =================================================
+                     PROFESSIONAL STATISTICS
+                ================================================== -->
+
+                <div class="profile-stats">
+
+                    <div class="stat-box">
+
+                        <strong>
+                            {{ posts|length }}
+                        </strong>
+
+                        <span>
+                            Posts
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'followers' profile_user.username %}"
+                        class="stat-box"
+                    >
+
+                        <strong
+                            id="profile-followers-count"
+                        >
+                            {{ followers_count }}
+                        </strong>
+
+                        <span>
+                            Followers
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'following' profile_user.username %}"
+                        class="stat-box"
+                    >
+
+                        <strong>
+                            {{ following_count }}
+                        </strong>
+
+                        <span>
+                            Following
+                        </span>
+
+                    </a>
+
+
+                    <div class="stat-box">
+
+                        <strong>
+                            {{ total_likes }}
+                        </strong>
+
+                        <span>
+                            Total Likes
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         USER POSTS
+    ====================================================== -->
+
+    <div class="profile-posts">
+
+        <h2>
+            Posts
+        </h2>
+
+
+        {% for post in posts %}
+
+        <article class="card post-card">
+
+            <div class="post-header">
+
+                <strong>
+                    @{{ post.author.username }}
+                </strong>
+
+                <small>
+                    {{ post.created_at|timesince }} ago
+                </small>
+
+            </div>
+
+
+            {% if post.content %}
+
+            <div class="post-content">
+                {{ post.content|linebreaksbr }}
+            </div>
+
+            {% endif %}
+
+
+            {% if post.images.all %}
+
+            <div class="post-gallery">
+
+                {% for image in post.images.all %}
+
+                    <img
+                        src="{{ image.image.url }}"
+                        alt="Post image"
+                    >
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="post-stats">
+
+                <span>
+                    {{ post.likes.count }} likes
+                </span>
+
+                <span>
+                    {{ post.comments.count }} comments
+                </span>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="card empty-state">
+
+            <h3>
+                No posts yet
+            </h3>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
