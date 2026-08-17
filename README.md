@@ -212,7 +212,7 @@ The design contains:
 
 ## Project Structure
 
-
+```text
 social_media/
 │
 ├── manage.py
@@ -387,7 +387,7 @@ Database constraints prevent:
 ---
 
 ## Database Relationships
-
+```text
 User
  │
  ├── Profile
@@ -526,7 +526,7 @@ http://127.0.0.1:8000/admin/
 
 ## Application Workflow
 
-
+```text
 User Registration
        │
        ▼
